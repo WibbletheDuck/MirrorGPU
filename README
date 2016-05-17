@@ -1,0 +1,12 @@
+GPU Magneto-Kinetic Test-Particle Simulation
+
+
+mirror_gpu.m
+
+This is the final written version of mirror code which runs on GPUs.
+
+Note: this is OLD CODE, and there may be bug fixes and stuff in the Shards code that were not implemented here.
+
+Algorithmically the code is essentially the same as Mirror Shards, but allocates its arrays with the 'gpuArray' parameter, and makes heavy use of arrayfun() on included functions, as this is faster on GPUs.  As far as I can tell, when Matlab first sees an arrayfun() working on data stored in the GPU's RAM, it builds a CUDA kernel for that function, so future runs of the same type (as in a for loop) are GPU accelerated/parallelized as best as possible.
+
+There is some turning point, dependent on number of particles and the necessary timesteps for the desired simulation length, between which either CPU sharding or GPU parallelism is the best choice.  Of course, it also depends on what GPUs and CPUs are available.
